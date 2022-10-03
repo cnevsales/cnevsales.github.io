@@ -1,0 +1,244 @@
+<p>2021 Monthly Deliveries</p>
+
+<div id="chart_monthly_deliveries" style="min-height: 365px;"></div>
+<script>
+  var options = {
+    series: [
+      {
+        name: "NIO",
+        data: [10878, 3667, 10628, 5880, 7931, 8083, 6711, 7102, 7257, 5578, 7225].reverse()
+      },
+      {
+        name: "XPEV",
+        data: [15613, 10138, 10412, 7214, 8040, 6565, 5686, 5147, 5102, 2223, 6015].reverse()
+      },
+      {
+        name: "LI",
+        data: [13485, 7649, 7094, 9433, 8589, 7713, 4323, 5539, 4900, 2300, 5379].reverse()
+      }
+    ],
+    chart: {
+      height: 350,
+      type: 'line',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    colors: ['#47ad5f', '#4fc8e3', '#6c6ca1'],
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    title: {
+      text: 'Jan - Nov',
+      align: 'left'
+    },
+    grid: {
+      borderColor: '#e7e7e7',
+      row: {
+        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+        opacity: 0.5
+      },
+    },
+    markers: {
+      size: 1
+    },
+    xaxis: {
+      categories: ['Jan 2021', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+      title: {
+        text: ''
+      }
+    },
+    yaxis: {
+      title: {
+        text: ''
+      },
+      min: 0,
+      max: 20000
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'right',
+      floating: true,
+      offsetY: -25,
+      offsetX: -5
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart_monthly_deliveries"), options);
+  chart.render();
+</script>
+
+<p>2021 Month-over-Month Growth (%)</p>
+<div id="chart_mom_growth" style="min-height: 365px;"></div>
+<script>
+  var options = {
+    series: [
+      {
+        name: "NIO",
+        data: [1.97, -0.65, 0.81, -0.26, -0.02, 0.20, -0.06, -0.02, 0.30, -0.23, 0.03].reverse().map((x) => x * 100) 
+      },
+      {
+        name: "XPEV",
+        data: [0.54, -0.03, 0.44, -0.10, 0.22, 0.15, 0.10, 0.01, 1.30, -0.63, 0.06].reverse().map((x) => x * 100)
+      },
+      {
+        name: "LI",
+        data: [0.76, 0.08, -0.25, 0.10, 0.11, 0.78, -0.22, 0.13, 1.13, -0.57, -0.12].reverse().map((x) => x * 100)
+      }
+    ],
+    chart: {
+      height: 350,
+      type: 'line',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    colors: ['#47ad5f', '#4fc8e3', '#6c6ca1'],
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    title: {
+      text: 'Jan - Nov',
+      align: 'left'
+    },
+    grid: {
+      borderColor: '#e7e7e7',
+      row: {
+        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+        opacity: 0.5
+      },
+    },
+    markers: {
+      size: 1
+    },
+    xaxis: {
+      categories: ['Jan 2021', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+      title: {
+        text: ''
+      }
+    },
+    yaxis: {
+      title: {
+        text: ''
+      },
+      min: -100,
+      max: 300,
+      decimalsInFloat: 0
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'right',
+      floating: true,
+      offsetY: -25,
+      offsetX: -5
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart_mom_growth"), options);
+  chart.render();
+</script>
+
+<p>2021 Year-over-Year Growth (%)</p>
+<div id="chart_yoy_growth" style="min-height: 365px;"></div>
+<script>
+  var options = {
+    series: [
+      {
+        name: "NIO",
+        data: [1.06, -0.27, 1.26, 0.48, 1.24, 1.16, 0.95, 1.25, 3.73, 6.89, 3.52].reverse().map((x) => x * 100) 
+      },
+      {
+        name: "XPEV",
+        data: [2.70, 2.33, 1.99, 1.72, 2.28, 6.17, 4.83, 2.85, 3.84, 12.81, 4.70].reverse().map((x) => x * 100)
+      },
+      {
+        name: "LI",
+        data: [1.90, 1.07, 1.02, 2.48, 2.51, 3.21, 1.01, 1.11, 2.39, 7.55, 3.56].reverse().map((x) => x * 100)
+      }
+    ],
+    chart: {
+      height: 350,
+      type: 'line',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    colors: ['#47ad5f', '#4fc8e3', '#6c6ca1'],
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    title: {
+      text: 'Jan - Nov',
+      align: 'left'
+    },
+    grid: {
+      borderColor: '#e7e7e7',
+      row: {
+        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+        opacity: 0.5
+      },
+    },
+    markers: {
+      size: 1
+    },
+    xaxis: {
+      categories: ['Jan 2021', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+      title: {
+        text: ''
+      }
+    },
+    yaxis: {
+      title: {
+        text: ''
+      },
+      min: -100,
+      max: 1500,
+      decimalsInFloat: 0
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'right',
+      floating: true,
+      offsetY: -25,
+      offsetX: -5
+    },
+    tooltip: {
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart_yoy_growth"), options);
+  chart.render();
+</script>
