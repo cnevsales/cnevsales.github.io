@@ -3,7 +3,7 @@ author:
   name: cnevsales
   email:
 description: > # this means to ignore newlines until "show_excerpts:"
-  EV Sales data in China.
+  China EV Sales data.
 
 show_excerpts: false # set to true to show excerpts on the homepage
 
