@@ -1,38 +1,92 @@
 <p>Monthly Deliveries</p>
-
 <div id="chart_monthly_deliveries" style="min-height: 365px;"></div>
+
+<p>Month-over-Month Growth (%)</p>
+<div id="chart_mom_growth" style="min-height: 365px;"></div>
+
+<p>2021 Year-over-Year Growth (%)</p>
+<div id="chart_yoy_growth" style="min-height: 365px;"></div>
+
 <script>
-  var options = {
-    series: [
-      {
-        name: "NIO",
-        data: [10878, 10677, 10052, 12961, 7024, 5074, 9985, 6131, 9652, 10489, 10878, 3667, 10628, 5880, 7931, 8083, 6711, 7102, 7257, 5578, 7225].reverse()
-      },
-      {
-        name: "XPEV",
-        data: [8468, 9578, 11524, 15295, 10125, 9002, 15414, 6225, 12922, 16000, 15613, 10138, 10412, 7214, 8040, 6565, 5686, 5147, 5102, 2223, 6015].reverse()
-      },
-      {
-        name: "LI",
-        data: [11531, 4571, 10422, 13024, 11496, 4167, 11034, 8414, 12268, 14087, 13485, 7649, 7094, 9433, 8589, 7713, 4323, 5539, 4900, 2300, 5379].reverse()
-      }
-    ],
-    chart: {
-      height: 350,
-      type: 'line',
-      dropShadow: {
-        enabled: true,
-        color: '#000',
-        top: 18,
-        left: 7,
-        blur: 10,
-        opacity: 0.2
-      },
-      toolbar: {
-        show: false
-      }
+  // data
+  var salesData = [
+    {
+      name: "NIO",
+      data: [10878, 10677, 10052, 12961, 7024, 5074, 9985, 6131, 9652, 10489, 10878, 3667, 10628, 5880, 7931, 8083, 6711, 7102, 7257, 5578, 7225].reverse()
     },
-    colors: ['#47ad5f', '#4fc8e3', '#6c6ca1'],
+    {
+      name: "XPEV",
+      data: [8468, 9578, 11524, 15295, 10125, 9002, 15414, 6225, 12922, 16000, 15613, 10138, 10412, 7214, 8040, 6565, 5686, 5147, 5102, 2223, 6015].reverse()
+    },
+    {
+      name: "LI",
+      data: [11531, 4571, 10422, 13024, 11496, 4167, 11034, 8414, 12268, 14087, 13485, 7649, 7094, 9433, 8589, 7713, 4323, 5539, 4900, 2300, 5379].reverse()
+    }
+  ];
+  var momData = [
+    {
+      name: "NIO",
+      data: [0.019, 0.062, -0.224, 0.845, 0.384, -0.492, 0.629, -0.365, -0.080, -0.036, 1.97, -0.65, 0.81, -0.26, -0.02, 0.20, -0.06, -0.02, 0.30, -0.23, 0.03].reverse().map((x) => x * 100)
+    },
+    {
+      name: "XPEV",
+      data: [-0.116, -0.169, -0.247, 0.511, 0.125, -0.416, 1.476, -0.518, -0.192, 0.025, 0.54, -0.03, 0.44, -0.10, 0.22, 0.15, 0.10, 0.01, 1.30, -0.63, 0.06].reverse().map((x) => x * 100)
+    },
+    {
+      name: "LI",
+      data: [1.523, -0.561, -0.200, 0.133, 1.759, -0.622, 0.311, -0.314, -0.129, 0.045, 0.76, 0.08, -0.25, 0.10, 0.11, 0.78, -0.22, 0.13, 1.13, -0.57, -0.12].reverse().map((x) => x * 100)
+    }
+  ];
+  var yoyData = [
+    {
+      name: "NIO",
+      data: [0.02, 0.82, 0.27, 0.60, 0.05, -0.29, 0.38, 0.10, 0.34, 0.50, 1.06, -0.27, 1.26, 0.48, 1.24, 1.16, 0.95, 1.25, 3.73, 6.89, 3.52].reverse().map((x) => x * 100)
+    },
+    {
+      name: "XPEV",
+      data: [-0.19, 0.33, 0.43, 1.33, 0.78, 0.75, 2.02, 1.80, 1.15, 1.81, 2.70, 2.33, 1.99, 1.72, 2.28, 6.17, 4.83, 2.85, 3.84, 12.81, 4.70].reverse().map((x) => x * 100)
+    },
+    {
+      name: "LI",
+      data: [0.63, -0.52, 0.21, 0.69, 1.66, -0.25, 1.25, 2.66, 1.28, 1.30, 1.90, 1.07, 1.02, 2.48, 2.51, 3.21, 1.01, 1.11, 2.39, 7.55, 3.56].reverse().map((x) => x * 100)
+    }
+  ];
+
+  // common chart settings
+  var chartConfig = {
+    height: 350,
+    type: 'line',
+    dropShadow: {
+      enabled: true,
+      color: '#000',
+      top: 18,
+      left: 7,
+      blur: 10,
+      opacity: 0.2
+    },
+    toolbar: {
+      show: false
+    }
+  };
+
+  var colors = ['#499cf5', '#FF6933', '#429e42'];
+
+  var xAxis = {
+    categories: ['Jan 2021', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan 2022', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    labels: {
+      rotate: -45,
+      rotateAlways: true
+    },
+    title: {
+      text: ''
+    }
+  };
+
+  // create charts
+  var salesChartOptions = {
+    series: salesData,
+    chart: chartConfig,
+    colors: colors,
     dataLabels: {
       enabled: false,
     },
@@ -53,16 +107,7 @@
     markers: {
       size: 1
     },
-    xaxis: {
-      categories: ['Jan 2021', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan 2022', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-      labels: {
-        rotate: -45,
-        rotateAlways: true
-      },
-      title: {
-        text: ''
-      }
-    },
+    xaxis: xAxis,
     yaxis: {
       title: {
         text: 'Deliveries'
@@ -78,45 +123,12 @@
       offsetX: -5
     }
   };
+  new ApexCharts(document.querySelector("#chart_monthly_deliveries"), salesChartOptions).render();
 
-  var chart = new ApexCharts(document.querySelector("#chart_monthly_deliveries"), options);
-  chart.render();
-</script>
-
-<p>Month-over-Month Growth (%)</p>
-<div id="chart_mom_growth" style="min-height: 365px;"></div>
-<script>
-  var options = {
-    series: [
-      {
-        name: "NIO",
-        data: [0.019, 0.062, -0.224, 0.845, 0.384, -0.492, 0.629, -0.365, -0.080, -0.036, 1.97, -0.65, 0.81, -0.26, -0.02, 0.20, -0.06, -0.02, 0.30, -0.23, 0.03].reverse().map((x) => x * 100) 
-      },
-      {
-        name: "XPEV",
-        data: [-0.116, -0.169, -0.247, 0.511, 0.125, -0.416, 1.476, -0.518, -0.192, 0.025, 0.54, -0.03, 0.44, -0.10, 0.22, 0.15, 0.10, 0.01, 1.30, -0.63, 0.06].reverse().map((x) => x * 100)
-      },
-      {
-        name: "LI",
-        data: [1.523, -0.561, -0.200, 0.133, 1.759, -0.622, 0.311, -0.314, -0.129, 0.045, 0.76, 0.08, -0.25, 0.10, 0.11, 0.78, -0.22, 0.13, 1.13, -0.57, -0.12].reverse().map((x) => x * 100)
-      }
-    ],
-    chart: {
-      height: 350,
-      type: 'line',
-      dropShadow: {
-        enabled: true,
-        color: '#000',
-        top: 18,
-        left: 7,
-        blur: 10,
-        opacity: 0.2
-      },
-      toolbar: {
-        show: false
-      }
-    },
-    colors: ['#47ad5f', '#4fc8e3', '#6c6ca1'],
+  var momChartOptions = {
+    series: momData,
+    chart: chartConfig,
+    colors: colors,
     dataLabels: {
       enabled: false,
     },
@@ -137,16 +149,7 @@
     markers: {
       size: 1
     },
-    xaxis: {
-      categories: ['Jan 2021', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan 2022', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-      labels: {
-        rotate: -45,
-        rotateAlways: true
-      },
-      title: {
-        text: ''
-      }
-    },
+    xaxis: xAxis,
     yaxis: {
       title: {
         text: ''
@@ -164,44 +167,12 @@
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart_mom_growth"), options);
-  chart.render();
-</script>
+  new ApexCharts(document.querySelector("#chart_mom_growth"), momChartOptions).render();
 
-<p>2021 Year-over-Year Growth (%)</p>
-<div id="chart_yoy_growth" style="min-height: 365px;"></div>
-<script>
-  var options = {
-    series: [
-      {
-        name: "NIO",
-        data: [0.02, 0.82, 0.27, 0.60, 0.05, -0.29, 0.38, 0.10, 0.34, 0.50, 1.06, -0.27, 1.26, 0.48, 1.24, 1.16, 0.95, 1.25, 3.73, 6.89, 3.52].reverse().map((x) => x * 100) 
-      },
-      {
-        name: "XPEV",
-        data: [-0.19, 0.33, 0.43, 1.33, 0.78, 0.75, 2.02, 1.80, 1.15, 1.81, 2.70, 2.33, 1.99, 1.72, 2.28, 6.17, 4.83, 2.85, 3.84, 12.81, 4.70].reverse().map((x) => x * 100)
-      },
-      {
-        name: "LI",
-        data: [0.63, -0.52, 0.21, 0.69, 1.66, -0.25, 1.25, 2.66, 1.28, 1.30, 1.90, 1.07, 1.02, 2.48, 2.51, 3.21, 1.01, 1.11, 2.39, 7.55, 3.56].reverse().map((x) => x * 100)
-      }
-    ],
-    chart: {
-      height: 350,
-      type: 'line',
-      dropShadow: {
-        enabled: true,
-        color: '#000',
-        top: 18,
-        left: 7,
-        blur: 10,
-        opacity: 0.2
-      },
-      toolbar: {
-        show: false
-      }
-    },
-    colors: ['#47ad5f', '#4fc8e3', '#6c6ca1'],
+  var yoyChartOptions = {
+    series: yoyData,
+    chart: chartConfig,
+    colors: colors,
     dataLabels: {
       enabled: false,
     },
@@ -222,16 +193,7 @@
     markers: {
       size: 1
     },
-    xaxis: {
-      categories: ['Jan 2021', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan 2022', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-      labels: {
-        rotate: -45,
-        rotateAlways: true
-      },
-      title: {
-        text: ''
-      }
-    },
+    xaxis: xAxis,
     yaxis: {
       title: {
         text: ''
@@ -250,7 +212,5 @@
     tooltip: {
     }
   };
-
-  var chart = new ApexCharts(document.querySelector("#chart_yoy_growth"), options);
-  chart.render();
+  new ApexCharts(document.querySelector("#chart_yoy_growth"), yoyChartOptions).render();
 </script>
