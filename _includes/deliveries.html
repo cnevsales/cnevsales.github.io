@@ -1,3 +1,7 @@
+<p>September 2022</p>
+<div id="summary-table"></div>
+
+<br />
 <p>Monthly Deliveries</p>
 <div id="chart_monthly_deliveries" style="min-height: 365px;"></div>
 
@@ -8,6 +12,25 @@
 <div id="chart_yoy_growth" style="min-height: 365px;"></div>
 
 <script>
+  var tabledata = [
+    { id: 1, brand: "LI", progress: 12, delivered: "11,531", mom: "152.26%", yoy: "62.55%", total: "86,927" },
+    { id: 2, brand: "NIO", progress: 12, delivered: "10,878", mom: "1.88%", yoy: "2.35%", total: "82,434" },
+    { id: 3, brand: "XPEV", progress: 12, delivered: "8,468", mom: "-11.59%", yoy: "-18.67%", total: "98,553" },
+  ];
+  var table = new Tabulator("#summary-table", {
+    layout: "fitColumns",
+    // height: "200px",
+    data: tabledata,
+    columns: [
+      { title: "Brand", field: "brand", width: 120, frozen: true }, //frozen column
+      // { title: "Progress", field: "progress", sorter: "number", hozAlign: "left", formatter: "progress", width: 200, editable: true },
+      { title: "Delivered", field: "delivered", widthGrow: 3 },
+      { title: "MoM Change", field: "mom", widthGrow: 3 },
+      { title: "YoY Change", field: "yoy", widthGrow: 3 },
+      { title: "2022 Total", field: "total", widthGrow: 3 },
+    ]
+  });
+
   // data
   var salesData = [
     {
