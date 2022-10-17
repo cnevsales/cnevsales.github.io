@@ -3,7 +3,10 @@ author:
   name: cnevsales
   email:
 description: > # this means to ignore newlines until "show_excerpts:"
-  China EV Sales data.
+  We track electric vehicle sales data of leading Chinese manufacturers. NIO, Li Auto, BYD, XPeng are our top picks.
+
+short_description:
+  We track electric vehicle sales data of leading Chinese manufacturers.
 
 show_excerpts: false # set to true to show excerpts on the homepage
 
@@ -58,3 +61,4 @@ google_analytics: G-L13DTX0PGD
 plugins:
  - jekyll-feed
  - jekyll-seo-tag
+ - jekyll-minifier
